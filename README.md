@@ -3,7 +3,7 @@
 ---
 
 ## 1. 문제 정의 (Problem Definition)
-* **해결하고자 하는 문제:** 현대 축구(EPL) 경기 중 발생하는 수십만 건의 무작위 매치 이벤트 로그(파울, 슛, 교체 등)는 데이터의 부피가 커 단일 PC 환경(Pandas 등)에서는 메모리 초과 및 연산 속도 저하 문제가 발생합니다. 본 프로젝트는 분산 컴퓨팅 프레임워크인 **하둡 생태계(Hadoop Ecosystem)**를 활용하여 대용량 매치 데이터를 안정적으로 적재·정제하고 분산 집계함으로써, 실제 경기에서 가장 빈번하게 발생하는 핵심 전술 이벤트 통계를 추출하고 데이터 웨어하우스를 구축하는 것을 목표로 합니다.
+* **해결하고자 하는 문제:** 현대 축구(EPL) 경기 중 발생하는 수십만 건의 무작위 매치 이벤트 로그(파울, 슛, 교체 등)는 데이터의 부피가 커 단일 PC 환경(Pandas 등)에서는 메모리 초과 및 연산 속도 저하 문제가 발생합니다. 본 프로젝트는 분산 컴퓨팅 프레임워크인 하둡 생태계(Hadoop Ecosystem)를 활용하여 대용량 매치 데이터를 안정적으로 적재·정제하고 분산 집계함으로써, 실제 경기에서 가장 빈번하게 발생하는 핵심 전술 이벤트 통계를 추출하고 데이터 웨어하우스를 구축하는 것을 목표로 합니다.
 * **분석 데이터셋:** Kaggle 제공 EPL 경기 세부 이벤트 로그 데이터 (`events.csv`, 약 173MB, 총 **705,451건**의 대용량 레코드)
 
 ---
@@ -22,7 +22,6 @@
 ---
 
 ## 3. 디렉토리 구조 (Repository Structure)
-기말 프로젝트 가이드라인 요구사항(4.2 항목)을 100% 준수하여 다음과 같이 리포지토리 폴더 구조를 설계하였습니다.
 
 ```text
 epl-tactics-data-pipeline/
@@ -45,7 +44,6 @@ epl-tactics-data-pipeline/
 ---
 
 ## 4. 파이프라인 실행 가이드 (How to Run)
-본 프로젝트의 모든 소스코드는 아래 명령어 순서에 따라 완벽하게 동기화 및 재현(Replication)이 가능합니다.
 
 ### Step 1. 데이터 수집 및 HDFS 적재
 ```bash
@@ -97,8 +95,7 @@ SELECT * FROM epl_event_summary ORDER BY total_count DESC;
 | **1** | Substitution/Tactics ("8") | 237,932 건 | 경기 중 감독들의 선수 교체 및 치열한 실시간 전술 변화 시도가 가장 빈번함 |
 | **2** | Fouls ("3") | 232,907 건 | 현대 축구의 매우 격렬하고 타이트한 압박 및 볼 경합 강도를 증명함 |
 | **3** | Shots/Attempts ("1") | 180,006 건 | 경기당 수십 차례 이상 발생하는 공격 시도 및 슈팅 장면의 볼륨 확인 |
-| **4** | Others ("4") | 39,911 건 |<img width="572" height="89" alt="1" src="https://github.com/user-attachments/assets/a95ac09d-709e-4589-a26a-48559269ca5b" />
- 기타 경기 중단 및 인플레이션 상황 데이터 |
+| **4** | Others ("4") | 39,911 건 | 기타 경기 중단 및 인플레이션 상황 데이터 |
 | **5** | Offsides ("10") | 10,730 건 | 수비 라인 브레이킹 및 오프사이드 트랩 작동 빈도 통계 |
 | **6** | Cards ("11") | 2,706 건 | 경고 및 퇴장 조치 비율 |
 | **7** | Goalkeeper Events ("6") | 1,152 건 | 골키퍼 특수 세이브 및 핸들링 로그 |
@@ -110,7 +107,6 @@ SELECT * FROM epl_event_summary ORDER BY total_count DESC;
 ---
 
 ## 6. AI 도구 활용 명시 (AI Tool Usage Policy)
-기말 프로젝트 가이드라인 **'8. AI 도구 사용 정책'** 요구사항에 의거하여 본 프로젝트 수행 중 발생한 오류의 디버깅 및 솔루션 최적화 과정에서 다음과 같이 AI 도구(Gemini)를 정직하게 활용하였음을 명시합니다.
 
 * **YARN MapReduce 컨테이너 경로 에러 디버깅:** `mrjob` 구동 시 발생한 `PipeMapRed.waitOutputThreads() subprocess failed with code 127` 예외에 대하여, 하둡 워커 노드가 로컬 파이썬 실행 바이너리 경로를 참조하지 못하는 인프라 구조적 원인을 파악하고 `--python-bin python3.6` 환경 변수를 주입하는 해결책을 도출하는 데 적극 활용함.
 * **Hive 쿼리 권한(Permission) 문제 해결:** Hive 데이터 웨어하우스 외부 테이블 구성 중 발생한 `FAILED: HiveAccessControlException Permission denied: user [hive]` 보안 에러에 대해, 하둡 소유 계정 간의 권한 간섭 문제를 이해하고 HDFS 파일 권한 변경 명령어(`hdfs dfs -chmod -R 777`)를 적용하여 파이프라인을 성공적으로 관통시킴.
