@@ -90,6 +90,7 @@ SELECT * FROM epl_event_summary ORDER BY total_count DESC;
 총 **705,451건**의 정제 데이터를 집계한 결과, EPL 경기 중 가장 빈번하게 발생하는 상위 이벤트 트렌드를 도출하였습니다.
 
 <img width="399" height="145" alt="2" src="https://github.com/user-attachments/assets/6231c549-11f8-4460-9f59-7336389e3259" />
+
 ### 최종 데이터 웨어하우스 산출물 테이블
 | 순위 | 이벤트 타입 및 코드 (event_type) | 총 발생 횟수 (total_count) | 통계적 해석 및 인사이트 |
 | :---: | :--- | :--- | :--- |
