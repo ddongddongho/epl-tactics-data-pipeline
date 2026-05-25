@@ -102,7 +102,9 @@ SELECT * FROM epl_event_summary ORDER BY total_count DESC;
 | **8** | Defensive Saves ("5") | 100 건 | 수비수의 결정적인 골라인 클리어링 등 희귀 지표 |
 | **9** | Penalty Conceded ("2") | 7 건 | 전체 대용량 데이터 중 단 7회만 기록되어 가장 희귀한 이벤트임을 규명 |
 
-> 💡 **시각화 결과 요약:** 상세 시각화 차트 결과물은 상위 레포지토리에 업로드된 `epl_event_chart.png` 파일을 참고하십시오.
+> 💡 **시각화 결과 요약:** 하둡 파이프라인을 거쳐 Hive에서 최종 집계된 오프라인 데이터를 기반으로 시각화한 결과 차트입니다.
+> 
+> ![EPL 매치 이벤트 분석 결과 차트](epl_event_chart.png)
 
 ---
 
